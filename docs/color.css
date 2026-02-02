@@ -1,3 +1,13 @@
 body{
-    background-color: aquamarine;
+    background-color: rgba(17, 18, 31, 0.703);
 }
+.main_box{
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      color: rgba(12, 11, 11, 0.842);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+/* .top_box h1{
+    color: #0e0d14;
+    text-shadow: 0.71px 0.71px 0 rgba(0, 0, 0, 0.3), 1.41px 1.41px 0 rgba(32, 27, 27, 0.3), 2.12px 2.12px 0 rgba(5, 2, 2, 0.3), 2.83px 2.83px 0 rgba(140, 121, 121, 0.3), 3.54px 3.54px 0 rgba(186, 161, 161, 0.3);
+} */
