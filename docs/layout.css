@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url(./background.png) no-repeat center center/cover;
+}
+
+.main_box {
+    border-radius: 20px;
+    padding: 40px;
+    width: 900px;
+    text-align: center;
+}
+
+.top_box h1 {
+    margin: 0;
+    text-align: center;
+    letter-spacing: 2em;
+    padding-left: 2em;
+    font-size: 44px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Info {
+  width: min(500px, calc(100vw - 40px));
+  font-weight: bold;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+  gap: 12px;
+}
+
+.label {
+  flex: 0 0 auto;
+  text-align: left;
+}
+
+.value {
+  flex: 1;               
+  text-align: right;
+  white-space: nowrap;    
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
