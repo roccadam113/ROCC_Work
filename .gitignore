@@ -1,1 +1,5 @@
 .vscode
+/HW/__pycache__
+HW/tempCodeRunnerFile.py
+*.srt
+*.txt
