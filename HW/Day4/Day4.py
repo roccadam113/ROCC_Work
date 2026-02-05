@@ -142,6 +142,7 @@ def _llm_cache_error_check(
             content=(
                 "你是快取有效性判斷器。"
                 "請判斷 cache_answer 是否像是錯誤訊息、失敗訊息或無法回答的內容。"
+                "若內容明顯與問題相關且像是在回答問題，請判為有效。"
                 "只輸出 JSON，不要輸出解釋文字。"
                 '輸出格式：{"invalid":true/false,"reason":"..."}'
             )
@@ -243,10 +244,13 @@ def check_cache(state: State):
         invalid_by_llm = _llm_cache_error_check(
             state.get("query", ""), cached_answer, cached_title, cached_url
         )
-        if invalid_by_llm or not _is_relevant(
+        relevant = _is_relevant(
             [cached_answer, cached_title or "", cached_url or ""], keywords
-        ):
+        )
+        if invalid_by_llm and not relevant:
             _purge_cache_entry(path, key)
+            return {"cache_hit": False, "cache_key": key}
+        if not relevant:
             return {"cache_hit": False, "cache_key": key}
 
         return {

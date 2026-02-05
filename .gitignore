@@ -1,7 +1,7 @@
 .vscode
-/HW/__pycache__
-HW/tempCodeRunnerFile.py
 *.srt
 *.txt
 scans_temp
 /HW/Day4/__pycache__
+__pycache__/
+*.pyc
