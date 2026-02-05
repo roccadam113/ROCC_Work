@@ -1,0 +1,14 @@
+{
+  "items": {
+    "latest apple iphone model": {
+      "answer": "根據提供的網頁截圖，核心內容是介紹 Apple 的 iPhone 系列產品，目前主要展示以下型號：\n\n*   **iPhone 17 Pro:** 價格為 **NT$39,900 起**。強調極致設計和攝影能力。\n*   **iPhone Air:** 價格為 **NT$36,900 起**。強調輕薄和優美設計。\n*   **iPhone 17:** 價格為 **NT$29,900 起**。強調更深入的效能。\n*   **iPhone 16**\n*   **iPhone 16e**\n*   **比較 iPhone 17 Pro、iPhone Air 與 iPhone 17** 的功能。\n\n網頁還包含展示 iPhone 產品的圖片，以及一個展示使用者使用 iPhone 的圖片。\n<|im_end|>",
+      "title": "iPhone - Apple (台灣)",
+      "url": "https://www.apple.com/tw/iphone/"
+    },
+    "taichung tech university what": {
+      "answer": "LLM 分析失敗: Connection error.",
+      "title": "國立臺中科技大學 National Taichung University of Science and Technology - 國立臺中科技大學 National Taichung University of Science ...",
+      "url": "https://www.nutc.edu.tw/"
+    }
+  }
+}
