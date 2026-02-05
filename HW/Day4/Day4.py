@@ -32,7 +32,11 @@ def search_tool():
     pass
 
 
-def router():
+def cache_router():
+    pass
+
+
+def planner_router():
     pass
 
 
@@ -43,7 +47,25 @@ flow.add_node("final_answer", final_answer)
 flow.add_node("query_gen", query_gen)
 flow.add_node("search_tool", search_tool)
 flow.set_entry_point("check_cache")
-flow.add_edge("check", "planner")
-flow.add_edge("planner", "final_answer")
+flow.add_conditional_edges(
+    "check_cache",
+    cache_router,
+    {
+        "planner": "planner",
+        END: END,
+    },
+)
+flow.add_conditional_edges(
+    "planner",
+    planner_router,
+    {
+        "query_gen": "query_gen",
+        "final_answer": "final_answer",
+    },
+)
+flow.add_edge("query_gen", "search_tool")
+flow.add_edge("search_tool", "planner")
+flow.add_edge("final_answer", END)
+
 app = flow.compile()
 print(app.get_graph().draw_ascii())
