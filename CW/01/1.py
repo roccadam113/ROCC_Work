@@ -7,8 +7,8 @@ from requests.adapters import HTTPAdapter
 from urllib3.poolmanager import PoolManager
 
 
-# 强制用 TLS 1.2 - 1.3 通訊
-class TLS13HttpAdapter(HTTPAdapter):
+# 限制 TLS 版本範圍 1.2 - 1.3
+class TLS1213HttpAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False, **pool_kwargs):
         ctx = ssl.create_default_context()
         ctx.minimum_version = ssl.TLSVersion.TLSv1_2
@@ -22,9 +22,9 @@ class TLS13HttpAdapter(HTTPAdapter):
         )
 
 
-def make_session_tls13() -> requests.Session:
+def make_session_tls1213() -> requests.Session:
     s = requests.Session()
-    s.mount("https://", TLS13HttpAdapter())
+    s.mount("https://", TLS1213HttpAdapter())
     return s
 
 
@@ -41,7 +41,7 @@ for file in filename:
         content = f.read().strip()
         texts.append(content)
 
-session = make_session_tls13()
+session = make_session_tls1213()
 all_vectors = []
 dimension = None
 for start in range(0, len(texts), 1):
