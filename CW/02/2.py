@@ -7,8 +7,11 @@ import ssl
 from requests.adapters import HTTPAdapter
 from urllib3.poolmanager import PoolManager
 import uuid
+import csv
+import os
+import pandas as pd
+import re
 
-COLLECTION = "cw02_collention"
 EMBED_SERVER = "https://ws-04.wade0426.me/embed"
 QDRANT_URL = "http://localhost:6333"
 
@@ -34,10 +37,14 @@ def make_session_tls1213() -> requests.Session:
     return s
 
 
-def embedding_text(texts: list[str], session: requests.Session):
+SESSION = make_session_tls1213()
+CLIENT = QdrantClient(url=QDRANT_URL)
+
+
+def embedding_text(texts: list[str]):
     data = {"texts": texts, "normalize": True, "batch_size": 32}
     try:
-        resp = session.post(EMBED_SERVER, json=data, timeout=60)
+        resp = SESSION.post(EMBED_SERVER, json=data, timeout=60)
         print(f"HTTP : {resp.status_code}")
         resp.raise_for_status()
         result = resp.json()
@@ -73,68 +80,165 @@ def sliding_splitter(text: str):
 
 
 def upsert_chunks_qdrant(
+    collection: str,
     chunks: list[str],
-    session: requests.Session,
-    client: QdrantClient,
-    source: str = "text.txt",
+    source: str,
+    batch: int = 5,
 ):
-    BATCH = 5
-    all_vectors = []
-    dimension = None
-    for i in range(0, len(chunks), BATCH):
-        batch_chunks = chunks[i : i + BATCH]
-        d, vecs = embedding_text(batch_chunks, session)
-        if dimension is None:
-            dimension = d
-        elif dimension != d:
-            raise RuntimeError(f"Embedding 維度不同{dimension} vs {d}")
-        all_vectors.extend(vecs)
+    first = chunks[:batch]
+    d, vecs = embedding_text(first)
+    dimension = d
 
-    if not client.collection_exists(COLLECTION):
-        client.create_collection(
-            collection_name=COLLECTION,
-            vectors_config=VectorParams(size=dimension, distance=Distance.COSINE),
-        )
+    if CLIENT.collection_exists(collection):
+        CLIENT.delete_collection(collection)
+
+    CLIENT.create_collection(
+        collection_name=collection,
+        vectors_config=VectorParams(size=dimension, distance=Distance.COSINE),
+    )
 
     points = []
-
-    for t, v in zip(chunks, all_vectors):
+    for idx, (t, v) in enumerate(zip(first, vecs), start=1):
         points.append(
             PointStruct(
-                id=str(uuid.uuid4()), vector=v, payload={"text": t, "source": source}
+                id=str(uuid.uuid4()),
+                vector=v,
+                payload={"text": t, "source": source, "chunk_id": idx},
             )
         )
+    CLIENT.upsert(collection_name=collection, points=points, wait=True)
 
-    client.upsert(collection_name=COLLECTION, points=points, wait=True)
-    print(f"節點完成：{len(points)}\npoints into->{COLLECTION}\n")
+    chunk_id = len(first) + 1
+    for i in range(batch, len(chunks), batch):
+        batch_chunks = chunks[i : i + batch]
+        d, vecs = embedding_text(batch_chunks)
+        if d != dimension:
+            raise RuntimeError(f"Embedding 維度不同 {dimension} vs {d}")
+
+        points = []
+        for t, v in zip(batch_chunks, vecs):
+            points.append(
+                PointStruct(
+                    id=str(uuid.uuid4()),
+                    vector=v,
+                    payload={"text": t, "source": source, "chunk_id": chunk_id},
+                )
+            )
+            chunk_id += 1
+
+        CLIENT.upsert(collection_name=collection, points=points, wait=True)
+
+    print(f"完成：{len(chunks)} chunks -> {collection}")
 
 
 def search_vdb(
     query: str,
     collection: str,
-    session: requests.Session,
-    client: QdrantClient,
     limit: int = 3,
 ):
-    d, q = embedding_text([query], session)
-    result = client.query_points(collection_name=collection, query=q[0], limit=limit)
+    d, q = embedding_text([query])
+    result = CLIENT.query_points(
+        collection_name=collection,
+        query=q[0],
+        limit=limit,
+        with_payload=True,
+    )
     hits = getattr(result, "points", result)
+
     for h in hits:
-        print(f"信心分數： {h.score}")
-        print(f"來源： {h.payload.get('source')}")
-        print(f"内容 : {h.payload.get('text')}")
-        print("*" * 50)
+        payload = h.payload or {}
+        print(f"分數：{h.score}")
+        print(f"來源：{payload.get('source')}")
+        print(f"chunk_id：{payload.get('chunk_id')}")
+        print(f"內容：{payload.get('text')}")
+        print("-" * 50)
 
 
-if __name__ == "__main__":
+def from_text():
     with open("./CW/02/text.txt", "r", encoding="utf-8") as f:
         text = f.read()
 
-    # fix_splitter(text)
-    chunks = sliding_splitter(text)
-    session = make_session_tls1213()
-    client = QdrantClient(url=QDRANT_URL)
-    upsert_chunks_qdrant(chunks, session, client)
+    fixed_chunks = fix_splitter(text)
+    sliding_chunks = sliding_splitter(text)
 
-    user_input = input("Input : ")
-    search_vdb(user_input, COLLECTION, session, client, limit=3)
+    upsert_chunks_qdrant("cw02_fixed", fixed_chunks, source="text.txt")
+    upsert_chunks_qdrant("cw02_sliding", sliding_chunks, source="text.txt")
+
+    q = input("Input: ")
+    print("\n=== fixed 結果 ===")
+    search_vdb(q, "cw02_fixed")
+
+    print("\n=== sliding 結果 ===")
+    search_vdb(q, "cw02_sliding")
+
+
+def markdown_to_chunks(max_chars: int = 500):
+    with open("./CW/02/table/table_txt.md", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    lines = content.strip().split("\n")
+    chunks = []
+    buf = []
+
+    header_re = re.compile(r"^\s{0,3}#{1,6}\s+")
+    table_line_re = re.compile(r"^\|.*\|$")
+
+    table_buf = []
+    in_table = False
+
+    def flush_buf():
+        nonlocal buf
+        if buf:
+            chunks.append("\n".join(buf).strip())
+            buf = []
+
+    def flush_table():
+        nonlocal table_buf, in_table
+        if table_buf:
+            chunks.append("\n".join(table_buf).strip())
+            table_buf = []
+        in_table = False
+
+    for line in lines:
+        is_table_line = bool(table_line_re.match(line))
+
+        if is_table_line:
+            if buf:
+                flush_buf()
+            in_table = True
+            table_buf.append(line.rstrip())
+            continue
+
+        if in_table and not is_table_line:
+            flush_table()
+
+        if header_re.match(line) and buf:
+            flush_buf()
+            buf.append(line.rstrip())
+        else:
+            buf.append(line.rstrip())
+
+    flush_buf()
+    flush_table()
+
+    final_chunks = []
+    for c in chunks:
+        if len(c) <= max_chars:
+            final_chunks.append(c)
+        else:
+            for i in range(0, len(c), max_chars):
+                final_chunks.append(c[i : i + max_chars].strip())
+
+    return [c for c in final_chunks if c]
+
+
+def from_table():
+    upsert_chunks_qdrant("table_txt_md", markdown_to_chunks(), source="table_txt.md")
+    q = input("Input: ")
+    print("\n=== Table 結果 ===")
+    search_vdb(q, "table_txt_md")
+
+
+if __name__ == "__main__":
+    # from_text()
+    from_table()
