@@ -7,11 +7,12 @@ from requests.adapters import HTTPAdapter
 from urllib3.poolmanager import PoolManager
 
 
-class TLS12HttpAdapter(HTTPAdapter):
+# 强制用 TLS 1.2 - 1.3 通訊
+class TLS13HttpAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False, **pool_kwargs):
         ctx = ssl.create_default_context()
         ctx.minimum_version = ssl.TLSVersion.TLSv1_2
-        ctx.maximum_version = ssl.TLSVersion.TLSv1_2
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_3
         self.poolmanager = PoolManager(
             num_pools=connections,
             maxsize=maxsize,
@@ -21,9 +22,9 @@ class TLS12HttpAdapter(HTTPAdapter):
         )
 
 
-def make_session_tls12() -> requests.Session:
+def make_session_tls13() -> requests.Session:
     s = requests.Session()
-    s.mount("https://", TLS12HttpAdapter())
+    s.mount("https://", TLS13HttpAdapter())
     return s
 
 
@@ -32,7 +33,7 @@ COLLECTION = "cw01_collection"
 filename = ["data_01.txt", "data_02.txt", "data_03.txt", "data_04.txt", "data_05.txt"]
 texts = []
 PATH = "HW/Day5/HW/"
-
+EMBED_SERVER = "https://ws-04.wade0426.me/embed"
 
 for file in filename:
     path = os.path.join(PATH, file)
@@ -40,7 +41,7 @@ for file in filename:
         content = f.read().strip()
         texts.append(content)
 
-session = make_session_tls12()
+session = make_session_tls13()
 all_vectors = []
 dimension = None
 for start in range(0, len(texts), 1):
@@ -48,17 +49,18 @@ for start in range(0, len(texts), 1):
 
     data = {"texts": chunk_text, "normalize": True, "batch_size": 32}
     try:
-        resp = session.post("https://ws-04.wade0426.me/embed", json=data, timeout=60)
+        resp = session.post(EMBED_SERVER, json=data, timeout=60)
         print("Server OK!")
+        resp.raise_for_status()
+        result = resp.json()
     except Exception as e:
         print(e)
-    resp.raise_for_status()
-    result = resp.json()
+        raise
 
     if dimension is None:
         dimension = result["dimension"]
     elif dimension != result["dimension"]:
-        raise RuntimeError(f"Embedding 維度不同{dimension} vs {data['dimension']}")
+        raise RuntimeError(f"Embedding 維度不同{dimension} vs {result['dimension']}")
     all_vectors.extend(result["embeddings"])
 
 if not client.collection_exists(COLLECTION):
@@ -79,4 +81,18 @@ client.upsert(
     wait=True,
 )
 
-print("END")
+user_input = input("Input: ")
+user_data = {"texts": [user_input], "normalize": True, "batch_size": 32}
+resp = session.post(EMBED_SERVER, json=user_data, timeout=60)
+resp.raise_for_status()
+qvec = resp.json()["embeddings"][0]
+
+hit = client.query_points(
+    collection_name=COLLECTION, query=qvec, limit=3, with_payload=True
+).points
+
+for h in hit:
+    print(f"信心分數： {h.score}")
+    print(f"來源： {h.payload.get('source')}")
+    print(f"内容 : {h.payload.get('text')}")
+    print("*" * 50)
