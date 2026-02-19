@@ -1,0 +1,2 @@
+[2026-02-19 23:49:04] start kubectl -n monitoring port-forward svc/tenant-api 18126:8080
+Forwarding from 127.0.0.1:18126 -> 8080

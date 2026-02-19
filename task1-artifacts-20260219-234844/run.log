@@ -1,0 +1,67 @@
+[2026-02-19 23:48:44] OUT_DIR=/home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844
+[2026-02-19 23:48:44] RUN_LOG_FILE=/home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844/run.log
+[2026-02-19 23:48:44] === Startup begin ===
+[2026-02-19 23:48:44] Waiting for Kubernetes API
+[2026-02-19 23:48:45] Waiting for nodes Ready
+[2026-02-19 23:48:45] Dump cluster state
+[2026-02-19 23:48:49] DO_RESTART=0, skip rollout restarts
+[2026-02-19 23:48:49] Wait pods Ready ns=monitoring selector=app=fake-gpu-metrics
+[2026-02-19 23:48:49] Wait pods Ready ns=monitoring selector=app=kong-throttle-webhook
+[2026-02-19 23:48:49] Wait pods Ready ns=tenant-a selector=app=litellm
+[2026-02-19 23:48:49] Wait pods Ready ns=tenant-b selector=app=litellm
+[2026-02-19 23:48:52] Discovered ports: kong=80 webhook=8080 gpu=8080 tenant-api=8080
+OUT_DIR=/home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844
+Kong:        http://127.0.0.1:18123
+Webhook:     http://127.0.0.1:18124
+GPU Metrics: http://127.0.0.1:18125
+Tenant API:  http://127.0.0.1:18126
+[2026-02-19 23:49:06] === Verify start ===
+[2026-02-19 23:49:06] Wait HTTP 200: kong-health-tenant-a
+[2026-02-19 23:49:07] OK: kong-health-tenant-a became HTTP 200 on attempt 1
+[2026-02-19 23:49:07] [A] Health checks
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 113
+Connection: keep-alive
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+date: Thu, 19 Feb 2026 15:49:06 GMT
+server: uvicorn
+X-Kong-Upstream-Latency: 418
+X-Kong-Proxy-Latency: 3
+Via: 1.1 kong/3.9.1
+X-Kong-Request-Id: d55bde1db2215272cb39e8530f89f761
+
+{"healthy_endpoints":[{"model":"openai/fake-llm","api_base":"http://fake-llm:8080/v1"}],"unhealthy_endpoints":[]}HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 145
+Connection: keep-alive
+date: Thu, 19 Feb 2026 15:49:07 GMT
+server: uvicorn
+X-Kong-Upstream-Latency: 242
+X-Kong-Proxy-Latency: 0
+Via: 1.1 kong/3.9.1
+X-Kong-Request-Id: 5697807779b6070a8b07c36541e70844
+
+{"healthy_endpoints":[{"model":"openai/gpt-3.5-turbo","api_base":"http://fake-llm.tenant-a.svc.cluster.local:8080/v1"}],"unhealthy_endpoints":[]}[2026-02-19 23:49:08] GPU util (from /metrics) label tenant=default api_key=default
+70.00
+[2026-02-19 23:49:09] [B] LOW util -> expect rl disabled=true AND models mostly 200
+ok tenant=default api_key=default util=0
+metrics_util=0.00
+decide_util=0.0
+rl_disabled=true
+[2026-02-19 23:49:13] LOW converged on attempt 1: models x10 all 200
+[2026-02-19 23:49:13] [C] HIGH util -> expect rl disabled=false AND see some 429 under burst
+ok tenant=default api_key=default util=70
+metrics_util=70.00
+decide_util=70.0
+rl_disabled=false
+count_200=85 count_429=115 count_000=0 parallel=50 max_time=12s
+[2026-02-19 23:49:21] === Verify end ===
+[2026-02-19 23:49:21] === Startup end ===
+[2026-02-19 23:49:21] Artifacts saved: /home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844
+[2026-02-19 23:49:21] Endpoints: /home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844/endpoints.txt
+[2026-02-19 23:49:21] Burst curl errors (if any): /home/rocc/nutc2504lab_hw/task1-artifacts-20260219-234844/models-burst-high-errors.txt

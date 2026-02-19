@@ -1,6 +1,0 @@
-HTTP/1.0 200 OK
-Server: BaseHTTP/0.6 Python/3.11.14
-Date: Thu, 19 Feb 2026 07:19:55 GMT
-Content-Type: text/plain; charset=utf-8
-
-ok util=5 threshold=5 disabled=false patch_status=200
