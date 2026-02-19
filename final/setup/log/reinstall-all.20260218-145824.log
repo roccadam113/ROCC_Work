@@ -1,0 +1,23 @@
+[2026-02-18 14:58:24] Run log file: /home/rocc/first/reinstall-all.20260218-145824.log
+[2026-02-18 14:58:25] Waiting for nodes Ready
+node/task1-control-plane condition met
+node/task1-worker condition met
+node/task1-worker2 condition met
+NAME                  STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+task1-control-plane   Ready    control-plane   4m12s   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker          Ready    <none>          3m46s   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker2         Ready    <none>          3m46s   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-18 14:58:25] Preloading images (avoid ImagePullBackOff on kind nodes)
+[2026-02-18 14:58:25] Host already has postgres:15-alpine
+[2026-02-18 14:58:25] kind load docker-image postgres:15-alpine --name task1
+Image: "postgres:15-alpine" with ID "sha256:15283455b75304c90f51bf16b42c272a25fb52807945dc24830ec88e63cd896d" not yet present on node "task1-control-plane", loading...
+Image: "postgres:15-alpine" with ID "sha256:15283455b75304c90f51bf16b42c272a25fb52807945dc24830ec88e63cd896d" not yet present on node "task1-worker", loading...
+Image: "postgres:15-alpine" with ID "sha256:15283455b75304c90f51bf16b42c272a25fb52807945dc24830ec88e63cd896d" not yet present on node "task1-worker2", loading...
+[2026-02-18 14:58:52] Host already has python:3.11-slim
+[2026-02-18 14:58:52] kind load docker-image python:3.11-slim --name task1
+Image: "python:3.11-slim" with ID "sha256:466c0182639be3c46be2bd95edae0a22e92ff39913aeca0fc8b6c1b22942dccb" not yet present on node "task1-control-plane", loading...
+Image: "python:3.11-slim" with ID "sha256:466c0182639be3c46be2bd95edae0a22e92ff39913aeca0fc8b6c1b22942dccb" not yet present on node "task1-worker", loading...
+Image: "python:3.11-slim" with ID "sha256:466c0182639be3c46be2bd95edae0a22e92ff39913aeca0fc8b6c1b22942dccb" not yet present on node "task1-worker2", loading...
+[2026-02-18 14:59:12] Adding Helm repos
+[2026-02-18 15:00:06] Installing Cilium (kube-proxy replacement disabled; kind friendly baseline)
+Error: execution error at (cilium/templates/cilium-configmap.yaml:79:5): kubeProxyReplacement must be explicitly set to a valid value (true or false) to continue.

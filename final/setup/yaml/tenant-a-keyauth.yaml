@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: key-auth
+  namespace: tenant-a
+plugin: key-auth
+config:
+  key_names:
+  - apikey
+  hide_credentials: true

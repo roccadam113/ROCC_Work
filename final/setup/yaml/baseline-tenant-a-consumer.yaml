@@ -1,0 +1,26 @@
+apiVersion: configuration.konghq.com/v1
+credentials:
+- tenant-a-user1-keyauth
+kind: KongConsumer
+metadata:
+  annotations:
+    force-reconcile: "1771473254"
+    konghq.com/ingress.class: kong
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"configuration.konghq.com/v1","credentials":["tenant-a-user1-keyauth"],"kind":"KongConsumer","metadata":{"annotations":{},"name":"tenant-a-user1","namespace":"tenant-a"},"username":"tenant-a-user1"}
+    kubernetes.io/ingress.class: kong
+  creationTimestamp: "2026-02-19T03:36:41Z"
+  generation: 1
+  name: tenant-a-user1
+  namespace: tenant-a
+  resourceVersion: "70482"
+  uid: 234cfd91-0e5d-4184-ac3e-edd19421d589
+status:
+  conditions:
+  - lastTransitionTime: "2026-02-19T03:54:11Z"
+    message: Object was successfully configured in Kong.
+    observedGeneration: 1
+    reason: Programmed
+    status: "True"
+    type: Programmed
+username: tenant-a-user1

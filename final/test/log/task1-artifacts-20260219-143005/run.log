@@ -1,0 +1,119 @@
+[2026-02-19 14:30:05] OUT_DIR=/home/rocc/first/task1-artifacts-20260219-143005
+[2026-02-19 14:30:05] RUN_LOG_FILE=/home/rocc/first/task1-artifacts-20260219-143005/run.log
+[2026-02-19 14:30:05] === Startup begin ===
+[2026-02-19 14:30:05] Waiting for Kubernetes API
+[2026-02-19 14:30:05] Waiting for nodes Ready
+[2026-02-19 14:30:05] Dump cluster state
+[2026-02-19 14:30:11] Restart in ns=kong
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-kong" successfully rolled out
+[2026-02-19 14:30:48] Restart in ns=monitoring
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-gpu-metrics" successfully rolled out
+Waiting for deployment "kong-throttle-webhook" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-throttle-webhook" successfully rolled out
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+deployment "tenant-api" successfully rolled out
+[2026-02-19 14:31:36] Restart in ns=tenant-a
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-llm" successfully rolled out
+deployment "litellm" successfully rolled out
+[2026-02-19 14:31:42] Restart in ns=tenant-b
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+deployment "litellm" successfully rolled out
+[2026-02-19 14:31:46] Wait pods Ready ns=monitoring selector=app=fake-gpu-metrics
+[2026-02-19 14:31:46] Wait pods Ready ns=monitoring selector=app=kong-throttle-webhook
+[2026-02-19 14:31:47] Wait pods Ready ns=tenant-a selector=app=fake-llm
+[2026-02-19 14:31:47] Wait pods Ready ns=tenant-a selector=app=litellm
+[2026-02-19 14:31:47] Wait pods Ready ns=tenant-b selector=app=litellm
+[2026-02-19 14:31:49] Port-forward ns=kong svc/kong-kong-proxy 28080:80
+[2026-02-19 14:31:52] Port-forward ns=monitoring svc/kong-throttle-webhook 28083:8080
+[2026-02-19 14:31:55] Port-forward ns=monitoring svc/fake-gpu-metrics 28084:8080
+[2026-02-19 14:31:58] === Verify start (task requirement proof) ===
+[2026-02-19 14:31:58] [A] Health checks
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 06:31:58 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 20
+X-Kong-Proxy-Latency: 7
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 361b8b053ce4d928afb637124c7df975
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"361b8b053ce4d928afb637124c7df975"
+}HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 06:31:58 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Content-Length: 126
+X-Kong-Upstream-Latency: 9
+X-Kong-Proxy-Latency: 14
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 23a62e621a25aa6a4ae3813dcc337174
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"23a62e621a25aa6a4ae3813dcc337174"
+}10
+[2026-02-19 14:31:59] [B] LOW util -> expect rl disabled=true -> no 429
+ok util=0
+0
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 06:32:01 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok util=0 threshold=5 disabled=true patch_status=200
+rl_disabled=true
+502
+502
+502
+502
+502
+502
+502
+502
+502
+502
+[2026-02-19 14:32:03] [C] HIGH util -> expect rl disabled=false -> see 429
+ok util=10
+10
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 06:32:06 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok util=10 threshold=5 disabled=false patch_status=200
+rl_disabled=false
+502
+502
+502
+502
+502
+502
+502
+502
+502
+502
+[2026-02-19 14:32:08] === Verify end ===
+OUT_DIR=/home/rocc/first/task1-artifacts-20260219-143005
+Kong:    http://127.0.0.1:28080
+Webhook: http://127.0.0.1:28083
+GPU:     http://127.0.0.1:28084
+[2026-02-19 14:32:08] === Startup end ===
+[2026-02-19 14:32:08] Artifacts saved: /home/rocc/first/task1-artifacts-20260219-143005

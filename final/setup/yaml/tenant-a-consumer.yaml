@@ -1,0 +1,18 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: tenant-a-user1
+  namespace: tenant-a
+username: tenant-a-user1
+credentials:
+- tenant-a-user1-keyauth
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tenant-a-user1-keyauth
+  namespace: tenant-a
+type: Opaque
+stringData:
+  kongCredType: key-auth
+  key: tenant-a-user1-123456

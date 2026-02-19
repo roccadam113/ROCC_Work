@@ -1,0 +1,46 @@
+[2026-02-18 15:08:13] Run log file: /home/rocc/first/reinstall-all.20260218-150813.log
+[2026-02-18 15:08:13] Waiting for nodes Ready
+[2026-02-18 15:08:13] node/task1-control-plane condition met
+[2026-02-18 15:08:13] node/task1-worker condition met
+[2026-02-18 15:08:13] node/task1-worker2 condition met
+[2026-02-18 15:08:13] NAME                  STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+[2026-02-18 15:08:13] task1-control-plane   Ready    control-plane   14m   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-18 15:08:13] task1-worker          Ready    <none>          13m   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-18 15:08:13] task1-worker2         Ready    <none>          13m   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-18 15:08:13] Preloading images (avoid ImagePullBackOff on kind nodes)
+[2026-02-18 15:08:13] Host already has postgres:15-alpine
+[2026-02-18 15:08:13] kind load docker-image postgres:15-alpine --name task1
+[2026-02-18 15:08:14] Image: "postgres:15-alpine" with ID "sha256:15283455b75304c90f51bf16b42c272a25fb52807945dc24830ec88e63cd896d" found to be already present on all nodes.
+[2026-02-18 15:08:14] Host already has python:3.11-slim
+[2026-02-18 15:08:14] kind load docker-image python:3.11-slim --name task1
+[2026-02-18 15:08:15] Image: "python:3.11-slim" with ID "sha256:466c0182639be3c46be2bd95edae0a22e92ff39913aeca0fc8b6c1b22942dccb" found to be already present on all nodes.
+[2026-02-18 15:08:15] Adding Helm repos
+[2026-02-18 15:08:15] Hang tight while we grab the latest from your chart repositories...
+[2026-02-18 15:08:19] ...Successfully got an update from the "kong" chart repository
+[2026-02-18 15:08:25] ...Successfully got an update from the "prometheus-community" chart repository
+[2026-02-18 15:08:36] ...Successfully got an update from the "cilium" chart repository
+[2026-02-18 15:08:37] Update Complete. ⎈Happy Helming!⎈
+[2026-02-18 15:08:37] Installing/Upgrading Cilium
+[2026-02-18 15:08:44] Release "cilium" has been upgraded. Happy Helming!
+[2026-02-18 15:08:44] NAME: cilium
+[2026-02-18 15:08:44] LAST DEPLOYED: Wed Feb 18 15:08:42 2026
+[2026-02-18 15:08:44] NAMESPACE: kube-system
+[2026-02-18 15:08:44] STATUS: deployed
+[2026-02-18 15:08:44] REVISION: 2
+[2026-02-18 15:08:44] TEST SUITE: None
+[2026-02-18 15:08:44] NOTES:
+[2026-02-18 15:08:44] You have successfully installed Cilium with Hubble.
+[2026-02-18 15:08:44] 
+[2026-02-18 15:08:44] Your release version is 1.19.1.
+[2026-02-18 15:08:44] 
+[2026-02-18 15:08:44] For any further help, visit https://docs.cilium.io/en/v1.19/gettinghelp
+[2026-02-18 15:08:44] daemon set "cilium" successfully rolled out
+[2026-02-18 15:08:44] NAME     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE     CONTAINERS     IMAGES                                                                                                  SELECTOR
+[2026-02-18 15:08:44] cilium   3         3         3       3            3           kubernetes.io/os=linux   5m24s   cilium-agent   quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792   k8s-app=cilium
+[2026-02-18 15:08:44] NAME           READY   STATUS    RESTARTS   AGE     IP           NODE                  NOMINATED NODE   READINESS GATES
+[2026-02-18 15:08:44] cilium-6f8f5   1/1     Running   0          5m24s   172.18.0.4   task1-worker2         <none>           <none>
+[2026-02-18 15:08:44] cilium-rj8z8   1/1     Running   0          5m24s   172.18.0.3   task1-worker          <none>           <none>
+[2026-02-18 15:08:44] cilium-x7q68   1/1     Running   0          5m24s   172.18.0.2   task1-control-plane   <none>           <none>
+[2026-02-18 15:08:44] Installing Kong (DB-less, ingressController enabled, proxy NodePort)
+[2026-02-18 15:08:44] Release "kong" does not exist. Installing it now.
+[2026-02-18 15:08:53] Error: Unable to continue with install: CustomResourceDefinition "ingressclassparameterses.configuration.konghq.com" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "kong"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "kong"

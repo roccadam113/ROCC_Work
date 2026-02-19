@@ -1,0 +1,17 @@
+apiVersion: configuration.konghq.com/v1
+config:
+  hide_credentials: true
+  key_names:
+  - apikey
+kind: KongPlugin
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"configuration.konghq.com/v1","config":{"hide_credentials":true,"key_names":["apikey"]},"kind":"KongPlugin","metadata":{"annotations":{},"name":"key-auth","namespace":"tenant-a"},"plugin":"key-auth"}
+  creationTimestamp: "2026-02-19T03:36:34Z"
+  generation: 1
+  name: key-auth
+  namespace: tenant-a
+  resourceVersion: "68005"
+  uid: b6590f0b-a0ec-41ca-bc89-c7e1ee1bc46d
+plugin: key-auth

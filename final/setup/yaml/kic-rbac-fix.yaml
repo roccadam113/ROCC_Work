@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kic-consumer-secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get","list","watch"]
+- apiGroups: ["configuration.konghq.com"]
+  resources: ["kongconsumers","kongplugins","kongclusterplugins","kongingresses"]
+  verbs: ["get","list","watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kic-consumer-secret-reader-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kic-consumer-secret-reader
+subjects:
+- kind: ServiceAccount
+  name: kong-kong
+  namespace: kong

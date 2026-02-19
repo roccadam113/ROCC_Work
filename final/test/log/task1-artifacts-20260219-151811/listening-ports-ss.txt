@@ -1,0 +1,11 @@
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                            
+LISTEN 0      4096       127.0.0.1:28084      0.0.0.0:*    users:(("kubectl",pid=37959,fd=7))
+LISTEN 0      4096       127.0.0.1:28080      0.0.0.0:*    users:(("kubectl",pid=37860,fd=7))
+LISTEN 0      4096       127.0.0.1:28083      0.0.0.0:*    users:(("kubectl",pid=37917,fd=7))
+LISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*                                      
+LISTEN 0      4096       127.0.0.1:35489      0.0.0.0:*                                      
+LISTEN 0      4096       127.0.0.1:41095      0.0.0.0:*                                      
+LISTEN 0      4096       127.0.0.1:631        0.0.0.0:*                                      
+LISTEN 0      4096      127.0.0.54:53         0.0.0.0:*                                      
+LISTEN 0      511        127.0.0.1:5409       0.0.0.0:*    users:(("code",pid=9309,fd=41))   
+LISTEN 0      4096           [::1]:631           [::]:*                                      

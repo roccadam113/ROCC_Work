@@ -1,0 +1,3 @@
+NAME       PLUGIN-TYPE     AGE    DISABLED   CONFIG                                             PROGRAMMED
+key-auth   key-auth        3h4m              {"hide_credentials":true,"key_names":["apikey"]}   
+rl-5rps    rate-limiting   160m   false      {"policy":"local","second":5}                      

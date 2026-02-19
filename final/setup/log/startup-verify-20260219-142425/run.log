@@ -1,0 +1,200 @@
+[2026-02-19 14:24:25] Output folder: /home/rocc/first/startup-verify-20260219-142425
+[2026-02-19 14:24:25] Run log file:  /home/rocc/first/startup-verify-20260219-142425/run.log
+[2026-02-19 14:24:25] === Startup begin ===
+[2026-02-19 14:24:25] Current context: kind-task1
+[2026-02-19 14:24:25] Waiting for Kubernetes API
+[2026-02-19 14:24:26] Kubernetes API reachable
+[2026-02-19 14:24:26] Waiting for nodes Ready
+[2026-02-19 14:24:26] All nodes Ready
+[2026-02-19 14:24:26] Dump cluster state into /home/rocc/first/startup-verify-20260219-142425
+[2026-02-19 14:24:27] kind context detected: cluster=task1
+[2026-02-19 14:24:27] kind nodes already have postgres:15-alpine; skip
+[2026-02-19 14:24:27] kind nodes already have python:3.11-slim; skip
+[2026-02-19 14:24:28] kind nodes already have ghcr.io/berriai/litellm:main; skip
+[2026-02-19 14:24:28] docker pull ghcr.io/nginxinc/nginx-unprivileged:stable
+stable: Pulling from nginxinc/nginx-unprivileged
+6e909acdb790: Pulling fs layer
+368559633a42: Pulling fs layer
+17d6d4f3b555: Pulling fs layer
+220ad684e91d: Pulling fs layer
+7aa64975a75d: Pulling fs layer
+fa2e4815d8b2: Pulling fs layer
+0ea84890c1ba: Pulling fs layer
+00aebf176404: Pulling fs layer
+7aa64975a75d: Waiting
+fa2e4815d8b2: Waiting
+0ea84890c1ba: Waiting
+00aebf176404: Waiting
+220ad684e91d: Waiting
+17d6d4f3b555: Verifying Checksum
+17d6d4f3b555: Download complete
+220ad684e91d: Verifying Checksum
+7aa64975a75d: Verifying Checksum
+7aa64975a75d: Download complete
+fa2e4815d8b2: Download complete
+0ea84890c1ba: Verifying Checksum
+0ea84890c1ba: Download complete
+00aebf176404: Verifying Checksum
+00aebf176404: Download complete
+368559633a42: Verifying Checksum
+368559633a42: Download complete
+6e909acdb790: Verifying Checksum
+6e909acdb790: Download complete
+6e909acdb790: Pull complete
+368559633a42: Pull complete
+17d6d4f3b555: Pull complete
+220ad684e91d: Pull complete
+7aa64975a75d: Pull complete
+fa2e4815d8b2: Pull complete
+0ea84890c1ba: Pull complete
+00aebf176404: Pull complete
+Digest: sha256:7051ba7b4b6575ac1b2ac7f14e58afa4646ae02bda31fb04225a312d08f7bef1
+Status: Downloaded newer image for ghcr.io/nginxinc/nginx-unprivileged:stable
+ghcr.io/nginxinc/nginx-unprivileged:stable
+[2026-02-19 14:26:24] kind load docker-image ghcr.io/nginxinc/nginx-unprivileged:stable --name task1
+[2026-02-19 14:26:45] ns=kong deploy/kong-kong replicas=1 (no scale)
+[2026-02-19 14:26:46] ns=monitoring deploy/fake-gpu-metrics replicas=1 (no scale)
+[2026-02-19 14:26:46] ns=monitoring deploy/kong-throttle-webhook replicas=1 (no scale)
+[2026-02-19 14:26:46] ns=monitoring deploy/tenant-api replicas=1 (no scale)
+[2026-02-19 14:26:46] ns=tenant-a deploy/fake-llm replicas=1 (no scale)
+[2026-02-19 14:26:46] ns=tenant-a deploy/litellm replicas=1 (no scale)
+[2026-02-19 14:26:47] ns=tenant-b deploy/litellm replicas=1 (no scale)
+[2026-02-19 14:26:47] Restart deployments/statefulsets/daemonsets in kong
+[2026-02-19 14:26:47] Rollout status (deploy) in kong
+[2026-02-19 14:26:47]   deployment.apps/kong-kong
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-kong" successfully rolled out
+[2026-02-19 14:27:14] Rollout status (statefulset) in kong
+[2026-02-19 14:27:14] Rollout status (daemonset) in kong
+[2026-02-19 14:27:15] Restart deployments/statefulsets/daemonsets in monitoring
+[2026-02-19 14:27:16] Rollout status (deploy) in monitoring
+[2026-02-19 14:27:16]   deployment.apps/fake-gpu-metrics
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-gpu-metrics" successfully rolled out
+[2026-02-19 14:27:19]   deployment.apps/kong-throttle-webhook
+deployment "kong-throttle-webhook" successfully rolled out
+[2026-02-19 14:27:19]   deployment.apps/tenant-api
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+deployment "tenant-api" successfully rolled out
+[2026-02-19 14:27:44] Rollout status (statefulset) in monitoring
+[2026-02-19 14:27:45] Rollout status (daemonset) in monitoring
+[2026-02-19 14:27:45] Restart deployments/statefulsets/daemonsets in tenant-a
+[2026-02-19 14:27:46] Rollout status (deploy) in tenant-a
+[2026-02-19 14:27:46]   deployment.apps/fake-llm
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-llm" successfully rolled out
+[2026-02-19 14:27:50]   deployment.apps/litellm
+deployment "litellm" successfully rolled out
+[2026-02-19 14:27:50] Rollout status (statefulset) in tenant-a
+[2026-02-19 14:27:50] Rollout status (daemonset) in tenant-a
+[2026-02-19 14:27:51] Restart deployments/statefulsets/daemonsets in tenant-b
+[2026-02-19 14:27:52] Rollout status (deploy) in tenant-b
+[2026-02-19 14:27:52]   deployment.apps/litellm
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+deployment "litellm" successfully rolled out
+[2026-02-19 14:27:54] Rollout status (statefulset) in tenant-b
+[2026-02-19 14:27:54] Rollout status (daemonset) in tenant-b
+[2026-02-19 14:27:54] Wait pods Ready: ns=monitoring selector=app=fake-gpu-metrics timeout=240s
+[2026-02-19 14:27:55] Wait pods Ready: ns=monitoring selector=app=kong-throttle-webhook timeout=240s
+[2026-02-19 14:27:55] Wait pods Ready: ns=tenant-a selector=app=fake-llm timeout=240s
+[2026-02-19 14:27:56] Wait pods Ready: ns=tenant-a selector=app=litellm timeout=240s
+[2026-02-19 14:27:57] Wait pods Ready: ns=tenant-b selector=app=litellm timeout=240s
+[2026-02-19 14:27:58] Starting port-forward 127.0.0.1:28080 -> svc/kong-kong-proxy:80 (ns=kong)
+[2026-02-19 14:28:00] Port-forward listening on 127.0.0.1:28080. Log: /home/rocc/first/startup-verify-20260219-142425/pf-kong-28080.log
+[2026-02-19 14:28:02] Starting port-forward 127.0.0.1:28083 -> svc/kong-throttle-webhook:8080 (ns=monitoring)
+[2026-02-19 14:28:04] Port-forward listening on 127.0.0.1:28083. Log: /home/rocc/first/startup-verify-20260219-142425/pf-webhook-28083.log
+[2026-02-19 14:28:05] Starting port-forward 127.0.0.1:28084 -> svc/fake-gpu-metrics:8080 (ns=monitoring)
+[2026-02-19 14:28:07] Port-forward listening on 127.0.0.1:28084. Log: /home/rocc/first/startup-verify-20260219-142425/pf-gpu-28084.log
+[2026-02-19 14:28:07] === Verify begin ===
+[2026-02-19 14:28:07] 1) Kong health tenant-a
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 06:28:07 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+Content-Length: 126
+X-Kong-Upstream-Latency: 6
+X-Kong-Proxy-Latency: 8
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 25b8400da522451e31c7142968e56e2e
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"25b8400da522451e31c7142968e56e2e"
+}[2026-02-19 14:28:07] 2) Kong health tenant-b
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 06:28:07 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Content-Length: 126
+X-Kong-Upstream-Latency: 6
+X-Kong-Proxy-Latency: 12
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 73477d3b42eae25a9541a525129c8377
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"73477d3b42eae25a9541a525129c8377"
+}[2026-02-19 14:28:07] 3) Ensure GPU util endpoint reachable
+[2026-02-19 14:28:08] gpu_util=10
+10
+[2026-02-19 14:28:10] 4) Case LOW util=0 (expect disabled=true and no 429)
+ok util=0
+0
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 06:28:12 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok util=0 threshold=5 disabled=true patch_status=200
+rl_disabled_after_low=true
+[2026-02-19 14:28:13] Run 10 requests /v1/models (tenant-a) after LOW util
+502
+502
+502
+502
+502
+502
+502
+502
+502
+429
+[2026-02-19 14:28:14] 5) Case HIGH util=10 (expect disabled=false and may see 429)
+ok util=10
+10
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 06:28:17 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok util=10 threshold=5 disabled=false patch_status=200
+rl_disabled_after_high=false
+[2026-02-19 14:28:18] Run 10 requests /v1/models (tenant-a) after HIGH util
+502
+502
+502
+502
+502
+429
+429
+429
+429
+429
+[2026-02-19 14:28:18] === Verify end ===
+OUT_DIR=/home/rocc/first/startup-verify-20260219-142425
+Kong:    http://127.0.0.1:28080
+Webhook: http://127.0.0.1:28083
+GPU:     http://127.0.0.1:28084
+[2026-02-19 14:28:18] === Startup end ===
+[2026-02-19 14:28:18] All logs saved under: /home/rocc/first/startup-verify-20260219-142425

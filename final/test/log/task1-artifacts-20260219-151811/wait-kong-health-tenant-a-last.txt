@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 113
+Connection: keep-alive
+X-RateLimit-Remaining-Second: 4
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+date: Thu, 19 Feb 2026 07:19:46 GMT
+server: uvicorn
+X-Kong-Upstream-Latency: 601
+X-Kong-Proxy-Latency: 1
+Via: 1.1 kong/3.9.1
+X-Kong-Request-Id: be97d1008597365c11e3d710dbbb0101
+
+{"healthy_endpoints":[{"model":"openai/fake-llm","api_base":"http://fake-llm:8080/v1"}],"unhealthy_endpoints":[]}
