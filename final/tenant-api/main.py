@@ -47,48 +47,53 @@ def harbor_create_project(project_name: str, visibility: str) -> Dict[str, Any]:
             detail={
                 "error": "HARBOR_UNREACHABLE",
                 "message": "Cannot reach Harbor API",
-                "details": {"exception": str(e), "harbor_url": HARBOR_URL},
+                "details": {"exception": str(e), "harbor_url": HARBOR_URL, "project": project_name},
             },
         )
 
-    if r.status_code == 201:
-        pid = None
+    # 409: already exists
+    if r.status_code == 409:
+        return {"project_name": project_name, "project_id": None, "already_exists": True}
+
+    if r.status_code != 201:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "error": "HARBOR_CREATE_PROJECT_FAILED",
+                "message": f"Harbor API returned {r.status_code}",
+                "details": {"status_code": r.status_code, "body": r.text[:300], "project": project_name},
+            },
+        )
+
+    # 2) Lookup project id
+    try:
+        pr = requests.get(
+            f"{base}/api/v2.0/projects",
+            params={"name": project_name},
+            auth=(HARBOR_USER, HARBOR_PASS),
+            timeout=10,
+            verify=HARBOR_VERIFY_TLS,
+        )
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "error": "HARBOR_UNREACHABLE",
+                "message": "Cannot reach Harbor API (project lookup)",
+                "details": {"exception": str(e), "harbor_url": HARBOR_URL, "project": project_name},
+            },
+        )
+
+    pid = None
+    if pr.status_code == 200:
         try:
-            pr = requests.get(
-                f"{base}/api/v2.0/projects",
-                params={"name": project_name},
-                auth=(HARBOR_USER, HARBOR_PASS),
-                timeout=10,
-                verify=HARBOR_VERIFY_TLS,
-            )
-        except requests.exceptions.RequestException as e:
-            raise HTTPException(
-                status_code=502,
-                detail={
-                    "error": "HARBOR_UNREACHABLE",
-                    "message": "Cannot reach Harbor API (project lookup)",
-                    "details": {"exception": str(e), "harbor_url": HARBOR_URL, "project": project_name},
-                },
-            )
+            data = pr.json()
+        except ValueError:
+            data = None
+        if isinstance(data, list) and len(data) > 0:
+            pid = data[0].get("project_id")
 
-        if pr.status_code == 200:
-            try:
-                data = pr.json()
-            except ValueError:
-                data = None
-            if isinstance(data, list) and len(data) > 0:
-                pid = data[0].get("project_id")
-
-        return {"project_name": project_name, "project_id": pid}
-
-    raise HTTPException(
-        status_code=502,
-        detail={
-            "error": "HARBOR_CREATE_PROJECT_FAILED",
-            "message": f"Harbor API returned {r.status_code}",
-            "details": {"body": r.text[:300], "project": project_name},
-        },
-    )
+    return {"project_name": project_name, "project_id": pid}
 
 
 def require_admin(auth_header: Optional[str]):
