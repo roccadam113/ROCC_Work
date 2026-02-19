@@ -172,7 +172,28 @@ def harbor_create_project(project_name: str, visibility: str) -> Dict[str, Any]:
         )
 
     if r.status_code == 409:
-        return {"project_name": project_name, "project_id": None, "already_exists": True}
+        # already exists -> try lookup id for a nicer response
+        try:
+            pr = requests.get(
+                f"{base}/api/v2.0/projects",
+                params={"name": project_name},
+                auth=(HARBOR_USER, HARBOR_PASS),
+                timeout=10,
+                verify=HARBOR_VERIFY_TLS,
+            )
+        except requests.exceptions.RequestException as e:
+            return {"project_name": project_name, "project_id": None, "already_exists": True}
+
+        pid = None
+        if pr.status_code == 200:
+            try:
+                data = pr.json()
+            except ValueError:
+                data = None
+            if isinstance(data, list) and len(data) > 0:
+                pid = data[0].get("project_id")
+
+        return {"project_name": project_name, "project_id": pid, "already_exists": True}
 
     if r.status_code != 201:
         raise HTTPException(
