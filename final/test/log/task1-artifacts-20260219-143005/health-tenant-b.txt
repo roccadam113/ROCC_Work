@@ -1,0 +1,15 @@
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 06:31:58 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Content-Length: 126
+X-Kong-Upstream-Latency: 9
+X-Kong-Proxy-Latency: 14
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 23a62e621a25aa6a4ae3813dcc337174
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"23a62e621a25aa6a4ae3813dcc337174"
+}

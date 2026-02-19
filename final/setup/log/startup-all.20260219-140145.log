@@ -1,0 +1,110 @@
+[2026-02-19 14:01:45] Run log file: /home/rocc/first/startup-all.20260219-140145.log
+[2026-02-19 14:01:45] === Startup begin ===
+[2026-02-19 14:01:45] Current context: kind-task1
+[2026-02-19 14:01:45] Waiting for Kubernetes API to be reachable
+[2026-02-19 14:01:46] Waiting for nodes to be Ready
+[2026-02-19 14:01:46] Nodes:
+NAME                  STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+task1-control-plane   Ready    control-plane   23h   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker          Ready    <none>          23h   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker2         Ready    <none>          23h   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-19 14:01:46] kind context detected: cluster=task1
+[2026-02-19 14:01:46] kind nodes already have postgres:15-alpine; skip pull/load
+[2026-02-19 14:01:47] kind nodes already have python:3.11-slim; skip pull/load
+[2026-02-19 14:01:47] tenant-a: quota hard already >= target; skip patch (requests.cpu=750m, limits.cpu=1500m)
+[2026-02-19 14:01:47] Namespace kong exists. Restarting deployments/statefulsets
+[2026-02-19 14:01:48] Rollout status (deploy) in kong
+[2026-02-19 14:01:48]   deployment.apps/kong-kong
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-kong" successfully rolled out
+[2026-02-19 14:02:25] Rollout status (statefulset) in kong
+[2026-02-19 14:02:25] Namespace monitoring exists. Restarting deployments/statefulsets
+[2026-02-19 14:02:26] Rollout status (deploy) in monitoring
+[2026-02-19 14:02:26]   deployment.apps/fake-gpu-metrics
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-gpu-metrics" successfully rolled out
+[2026-02-19 14:02:31]   deployment.apps/kong-throttle-webhook
+deployment "kong-throttle-webhook" successfully rolled out
+[2026-02-19 14:02:31]   deployment.apps/tenant-api
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+deployment "tenant-api" successfully rolled out
+[2026-02-19 14:05:00] Rollout status (statefulset) in monitoring
+[2026-02-19 14:05:00] Namespace tenant-a exists. Restarting deployments/statefulsets
+[2026-02-19 14:05:01] Rollout status (deploy) in tenant-a
+[2026-02-19 14:05:01]   deployment.apps/fake-llm
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-llm" successfully rolled out
+[2026-02-19 14:05:04]   deployment.apps/litellm
+deployment "litellm" successfully rolled out
+[2026-02-19 14:05:05] Rollout status (statefulset) in tenant-a
+[2026-02-19 14:05:05] Namespace tenant-b exists. Restarting deployments/statefulsets
+[2026-02-19 14:05:05] Rollout status (deploy) in tenant-b
+[2026-02-19 14:05:05]   deployment.apps/litellm
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+deployment "litellm" successfully rolled out
+[2026-02-19 14:05:08] Rollout status (statefulset) in tenant-b
+[2026-02-19 14:05:09] Wait pods Ready: ns=monitoring selector=app=fake-gpu-metrics timeout=180s
+[2026-02-19 14:05:09] Wait pods Ready: ns=monitoring selector=app=kong-throttle-webhook timeout=180s
+[2026-02-19 14:05:09] Wait pods Ready: ns=tenant-a selector=app=fake-llm timeout=180s
+[2026-02-19 14:05:10] Wait pods Ready: ns=tenant-a selector=app=litellm timeout=180s
+[2026-02-19 14:05:10] Wait pods Ready: ns=tenant-b selector=app=litellm timeout=180s
+[2026-02-19 14:05:12] Starting port-forward 127.0.0.1:28080 -> svc/kong-kong-proxy:80 (ns=kong)
+[2026-02-19 14:05:14] Port-forward listening on 127.0.0.1:28080. Log: /home/rocc/k8s-startup-logs/kong-portforward-28080.log
+[2026-02-19 14:05:15] Starting port-forward 127.0.0.1:28083 -> svc/kong-throttle-webhook:8080 (ns=monitoring)
+[2026-02-19 14:05:17] Port-forward listening on 127.0.0.1:28083. Log: /home/rocc/k8s-startup-logs/webhook-portforward-28083.log
+[2026-02-19 14:05:17] Pods overview (error states)
+[2026-02-19 14:05:17] Health check via Kong (retry until HTTP 200, max ~60s)
+[2026-02-19 14:05:17] Kong health not ready yet (HTTP 502) attempt 1/30
+[2026-02-19 14:05:20] Kong health not ready yet (HTTP 502) attempt 2/30
+[2026-02-19 14:05:22] Kong health not ready yet (HTTP 502) attempt 3/30
+[2026-02-19 14:05:24] Kong health not ready yet (HTTP 502) attempt 4/30
+[2026-02-19 14:05:26] Kong health not ready yet (HTTP 502) attempt 5/30
+[2026-02-19 14:05:28] Kong health not ready yet (HTTP 502) attempt 6/30
+[2026-02-19 14:05:30] Kong health not ready yet (HTTP 502) attempt 7/30
+[2026-02-19 14:05:32] Kong health not ready yet (HTTP 502) attempt 8/30
+[2026-02-19 14:05:34] Kong health not ready yet (HTTP 502) attempt 9/30
+[2026-02-19 14:05:36] Kong health not ready yet (HTTP 502) attempt 10/30
+[2026-02-19 14:05:38] Kong health not ready yet (HTTP 502) attempt 11/30
+[2026-02-19 14:05:40] Kong health not ready yet (HTTP 502) attempt 12/30
+[2026-02-19 14:05:42] Kong health not ready yet (HTTP 502) attempt 13/30
+[2026-02-19 14:05:44] Kong health not ready yet (HTTP 502) attempt 14/30
+[2026-02-19 14:05:47] Kong health not ready yet (HTTP 502) attempt 15/30
+[2026-02-19 14:05:49] Kong health not ready yet (HTTP 502) attempt 16/30
+[2026-02-19 14:05:51] Kong health not ready yet (HTTP 502) attempt 17/30
+[2026-02-19 14:05:53] Kong health not ready yet (HTTP 502) attempt 18/30
+[2026-02-19 14:05:55] Kong health not ready yet (HTTP 502) attempt 19/30
+[2026-02-19 14:05:57] Kong health not ready yet (HTTP 502) attempt 20/30
+[2026-02-19 14:05:59] Kong health not ready yet (HTTP 502) attempt 21/30
+[2026-02-19 14:06:01] Kong health not ready yet (HTTP 502) attempt 22/30
+[2026-02-19 14:06:03] Kong health not ready yet (HTTP 502) attempt 23/30
+[2026-02-19 14:06:05] Kong health not ready yet (HTTP 502) attempt 24/30
+[2026-02-19 14:06:07] Kong health not ready yet (HTTP 502) attempt 25/30
+[2026-02-19 14:06:09] Kong health not ready yet (HTTP 502) attempt 26/30
+[2026-02-19 14:06:11] Kong health not ready yet (HTTP 502) attempt 27/30
+[2026-02-19 14:06:14] Kong health not ready yet (HTTP 502) attempt 28/30
+[2026-02-19 14:06:16] Kong health OK (HTTP 200) on attempt 29
+[2026-02-19 14:06:16] Webhook healthz/decide (retry decide, max ~60s)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 06:06:16 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok
+[2026-02-19 14:06:18] Webhook decide OK (HTTP 200) on attempt 1
+[2026-02-19 14:06:18] decide body:
+ok util=10 threshold=5 disabled=false patch_status=200
+[2026-02-19 14:06:18] Backup endpoints (kind node IP):
+[2026-02-19 14:06:18]   Kong NodePort:    http://172.18.0.4:31451
+[2026-02-19 14:06:18]   Webhook NodePort: http://172.18.0.4:30217
+[2026-02-19 14:06:18] Port-forward endpoints:
+[2026-02-19 14:06:18]   Kong:    http://127.0.0.1:28080
+[2026-02-19 14:06:18]   Webhook: http://127.0.0.1:28083
+[2026-02-19 14:06:18] === Startup end ===

@@ -1,0 +1,106 @@
+[2026-02-19 12:49:27] Run log file: /home/rocc/first/startup-all.20260219-124927.log
+[2026-02-19 12:49:27] === Startup begin ===
+[2026-02-19 12:49:28] Current context: kind-task1
+[2026-02-19 12:49:28] Waiting for Kubernetes API to be reachable
+[2026-02-19 12:49:28] Waiting for nodes to be Ready
+[2026-02-19 12:49:28] Nodes:
+NAME                  STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+task1-control-plane   Ready    control-plane   21h   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker          Ready    <none>          21h   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker2         Ready    <none>          21h   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-19 12:49:28] kind context detected: cluster=task1
+[2026-02-19 12:49:29] kind nodes already have postgres:15-alpine; skip pull/load
+[2026-02-19 12:49:29] kind nodes already have python:3.11-slim; skip pull/load
+[2026-02-19 12:49:29] tenant-a: quota hard already >= target; skip patch (requests.cpu=750m, limits.cpu=1500m)
+[2026-02-19 12:49:30] Namespace kong exists. Restarting deployments/statefulsets
+[2026-02-19 12:49:30] Rollout status (deploy) in kong
+[2026-02-19 12:49:30]   deployment.apps/kong-kong
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-kong" successfully rolled out
+[2026-02-19 12:49:56] Rollout status (statefulset) in kong
+[2026-02-19 12:49:56] Namespace monitoring exists. Restarting deployments/statefulsets
+[2026-02-19 12:49:57] Rollout status (deploy) in monitoring
+[2026-02-19 12:49:57]   deployment.apps/fake-gpu-metrics
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-gpu-metrics" successfully rolled out
+[2026-02-19 12:49:59]   deployment.apps/kong-throttle-webhook
+Waiting for deployment "kong-throttle-webhook" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-throttle-webhook" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-throttle-webhook" successfully rolled out
+[2026-02-19 12:50:00]   deployment.apps/tenant-api
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+deployment "tenant-api" successfully rolled out
+[2026-02-19 12:50:28] Rollout status (statefulset) in monitoring
+[2026-02-19 12:50:28] Namespace tenant-a exists. Restarting deployments/statefulsets
+[2026-02-19 12:50:29] Rollout status (deploy) in tenant-a
+[2026-02-19 12:50:29]   deployment.apps/fake-llm
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-llm" successfully rolled out
+[2026-02-19 12:50:33]   deployment.apps/litellm
+deployment "litellm" successfully rolled out
+[2026-02-19 12:50:33] Rollout status (statefulset) in tenant-a
+[2026-02-19 12:50:33] Namespace tenant-b exists. Restarting deployments/statefulsets
+[2026-02-19 12:50:34] Rollout status (deploy) in tenant-b
+[2026-02-19 12:50:34]   deployment.apps/litellm
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+deployment "litellm" successfully rolled out
+[2026-02-19 12:50:37] Rollout status (statefulset) in tenant-b
+[2026-02-19 12:50:38] Starting port-forward 127.0.0.1:28080 -> svc/kong-kong-proxy:80 (ns=kong)
+[2026-02-19 12:50:40] Port-forward listening on 127.0.0.1:28080. Log: /home/rocc/k8s-startup-logs/kong-portforward-28080.log
+[2026-02-19 12:50:41] Starting port-forward 127.0.0.1:28083 -> svc/kong-throttle-webhook:8080 (ns=monitoring)
+[2026-02-19 12:50:43] Port-forward listening on 127.0.0.1:28083. Log: /home/rocc/k8s-startup-logs/webhook-portforward-28083.log
+[2026-02-19 12:50:43] Pods overview (error states)
+[2026-02-19 12:50:44] Health check via Kong (expected HTTP 200)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   126  100   126    0     0   2324      0 --:--:-- --:--:-- --:--:--  2290100   126  100   126    0     0   2322      0 --:--:-- --:--:-- --:--:--  2290
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 04:50:44 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Remaining-Second: 4
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 6
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 0975635dc0af3c2e9e14ca4b52a28c1b
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"0975635dc0af3c2e9e14ca4b52a28c1b"
+}[2026-02-19 12:50:44] Webhook healthz/decide (expected HTTP 200)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 04:50:44 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    76    0    55  100    21     48     18  0:00:01  0:00:01 --:--:--    66100    76    0    55  100    21     47     18  0:00:01  0:00:01 --:--:--    66
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 04:50:45 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok util=10 threshold=5 disabled=false patch_status=200
+[2026-02-19 12:50:46] Backup endpoints (kind node IP):
+[2026-02-19 12:50:46]   Kong NodePort:    http://172.18.0.4:31451
+[2026-02-19 12:50:46]   Webhook NodePort: http://172.18.0.4:30217
+[2026-02-19 12:50:46] Port-forward endpoints:
+[2026-02-19 12:50:46]   Kong:    http://127.0.0.1:28080
+[2026-02-19 12:50:46]   Webhook: http://127.0.0.1:28083
+[2026-02-19 12:50:46] === Startup end ===

@@ -1,0 +1,28 @@
+NAMESPACE            NAME                                          READY   STATUS    RESTARTS      AGE     IP             NODE                  NOMINATED NODE   READINESS GATES
+kong                 kong-kong-6c56fd68bc-nm6qt                    2/2     Running   0             5m9s    10.244.2.79    task1-worker          <none>           <none>
+kube-system          cilium-6f8f5                                  1/1     Running   4 (32m ago)   24h     172.18.0.2     task1-worker2         <none>           <none>
+kube-system          cilium-envoy-7bjsl                            1/1     Running   4 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          cilium-envoy-bfcst                            1/1     Running   4 (32m ago)   24h     172.18.0.3     task1-worker          <none>           <none>
+kube-system          cilium-envoy-gg6b9                            1/1     Running   4 (32m ago)   24h     172.18.0.2     task1-worker2         <none>           <none>
+kube-system          cilium-operator-d5845585d-gkp9j               1/1     Running   5 (32m ago)   24h     172.18.0.3     task1-worker          <none>           <none>
+kube-system          cilium-rj8z8                                  1/1     Running   4 (32m ago)   24h     172.18.0.3     task1-worker          <none>           <none>
+kube-system          cilium-x7q68                                  1/1     Running   4 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-6x2ph                      1/1     Running   2 (32m ago)   15h     10.244.0.49    task1-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-q5x8w                      1/1     Running   0             31m     10.244.2.241   task1-worker          <none>           <none>
+kube-system          etcd-task1-control-plane                      1/1     Running   2 (32m ago)   15h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          kindnet-8592v                                 1/1     Running   4 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          kindnet-smt4d                                 1/1     Running   5 (32m ago)   24h     172.18.0.2     task1-worker2         <none>           <none>
+kube-system          kindnet-zssb2                                 1/1     Running   5 (32m ago)   24h     172.18.0.3     task1-worker          <none>           <none>
+kube-system          kube-apiserver-task1-control-plane            1/1     Running   2 (32m ago)   15h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          kube-controller-manager-task1-control-plane   1/1     Running   5 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          kube-proxy-7nbwl                              1/1     Running   4 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+kube-system          kube-proxy-bdcf7                              1/1     Running   4 (32m ago)   24h     172.18.0.2     task1-worker2         <none>           <none>
+kube-system          kube-proxy-lbcxr                              1/1     Running   4 (32m ago)   24h     172.18.0.3     task1-worker          <none>           <none>
+kube-system          kube-scheduler-task1-control-plane            1/1     Running   6 (32m ago)   24h     172.18.0.4     task1-control-plane   <none>           <none>
+local-path-storage   local-path-provisioner-67b8995b4b-fl6jj       1/1     Running   4 (32m ago)   24h     10.244.0.240   task1-control-plane   <none>           <none>
+monitoring           fake-gpu-metrics-5d59bb8cd7-wd2mp             1/1     Running   0             4m42s   10.244.1.35    task1-worker2         <none>           <none>
+monitoring           kong-throttle-webhook-655cd49787-7b8jj        1/1     Running   0             4m42s   10.244.1.229   task1-worker2         <none>           <none>
+monitoring           tenant-api-cb64d4754-mrlgr                    1/1     Running   0             4m42s   10.244.2.240   task1-worker          <none>           <none>
+tenant-a             fake-llm-d44d6964f-gj795                      1/1     Running   0             81s     10.244.1.185   task1-worker2         <none>           <none>
+tenant-a             litellm-6799dbb9fb-8m9qh                      1/1     Running   0             81s     10.244.1.124   task1-worker2         <none>           <none>
+tenant-b             litellm-765857fbbf-x7xzp                      1/1     Running   0             76s     10.244.1.12    task1-worker2         <none>           <none>

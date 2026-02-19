@@ -1,0 +1,4 @@
+NAMESPACE   NAME      CLASS   HOSTS                    ADDRESS        PORTS   AGE
+tenant-a    litellm   kong    a.litellm.local          10.96.39.192   80      3h12m
+tenant-b    litellm   kong    b.litellm.local          10.96.39.192   80      18h
+tenant-d    litellm   kong    tenant-d.litellm.local   10.96.39.192   80      15h

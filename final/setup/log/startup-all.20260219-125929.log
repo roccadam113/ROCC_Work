@@ -1,0 +1,101 @@
+[2026-02-19 12:59:29] Run log file: /home/rocc/first/startup-all.20260219-125929.log
+[2026-02-19 12:59:29] === Startup begin ===
+[2026-02-19 12:59:29] Current context: kind-task1
+[2026-02-19 12:59:29] Waiting for Kubernetes API to be reachable
+[2026-02-19 12:59:29] Waiting for nodes to be Ready
+[2026-02-19 12:59:29] Nodes:
+NAME                  STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+task1-control-plane   Ready    control-plane   22h   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker          Ready    <none>          22h   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+task1-worker2         Ready    <none>          22h   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
+[2026-02-19 12:59:29] kind context detected: cluster=task1
+[2026-02-19 12:59:30] kind nodes already have postgres:15-alpine; skip pull/load
+[2026-02-19 12:59:30] kind nodes already have python:3.11-slim; skip pull/load
+[2026-02-19 12:59:31] tenant-a: quota hard already >= target; skip patch (requests.cpu=750m, limits.cpu=1500m)
+[2026-02-19 12:59:31] Namespace kong exists. Restarting deployments/statefulsets
+[2026-02-19 12:59:31] Rollout status (deploy) in kong
+[2026-02-19 12:59:31]   deployment.apps/kong-kong
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "kong-kong" rollout to finish: 1 old replicas are pending termination...
+deployment "kong-kong" successfully rolled out
+[2026-02-19 13:00:06] Rollout status (statefulset) in kong
+[2026-02-19 13:00:07] Namespace monitoring exists. Restarting deployments/statefulsets
+[2026-02-19 13:00:07] Rollout status (deploy) in monitoring
+[2026-02-19 13:00:07]   deployment.apps/fake-gpu-metrics
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-gpu-metrics" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-gpu-metrics" successfully rolled out
+[2026-02-19 13:00:10]   deployment.apps/kong-throttle-webhook
+deployment "kong-throttle-webhook" successfully rolled out
+[2026-02-19 13:00:10]   deployment.apps/tenant-api
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "tenant-api" rollout to finish: 1 old replicas are pending termination...
+deployment "tenant-api" successfully rolled out
+[2026-02-19 13:01:25] Rollout status (statefulset) in monitoring
+[2026-02-19 13:01:26] Namespace tenant-a exists. Restarting deployments/statefulsets
+[2026-02-19 13:01:26] Rollout status (deploy) in tenant-a
+[2026-02-19 13:01:26]   deployment.apps/fake-llm
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "fake-llm" rollout to finish: 1 old replicas are pending termination...
+deployment "fake-llm" successfully rolled out
+[2026-02-19 13:01:30]   deployment.apps/litellm
+deployment "litellm" successfully rolled out
+[2026-02-19 13:01:30] Rollout status (statefulset) in tenant-a
+[2026-02-19 13:01:30] Namespace tenant-b exists. Restarting deployments/statefulsets
+[2026-02-19 13:01:31] Rollout status (deploy) in tenant-b
+[2026-02-19 13:01:31]   deployment.apps/litellm
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "litellm" rollout to finish: 1 old replicas are pending termination...
+deployment "litellm" successfully rolled out
+[2026-02-19 13:01:34] Rollout status (statefulset) in tenant-b
+[2026-02-19 13:01:34] Wait pods Ready: ns=monitoring selector=app=fake-gpu-metrics timeout=180s
+[2026-02-19 13:01:35] Wait pods Ready: ns=monitoring selector=app=kong-throttle-webhook timeout=180s
+[2026-02-19 13:01:35] Wait pods Ready: ns=tenant-a selector=app=fake-llm timeout=180s
+[2026-02-19 13:01:36] Wait pods Ready: ns=tenant-a selector=app=litellm timeout=180s
+[2026-02-19 13:01:36] Wait pods Ready: ns=tenant-b selector=app=litellm timeout=180s
+[2026-02-19 13:01:38] Starting port-forward 127.0.0.1:28080 -> svc/kong-kong-proxy:80 (ns=kong)
+[2026-02-19 13:01:40] Port-forward listening on 127.0.0.1:28080. Log: /home/rocc/k8s-startup-logs/kong-portforward-28080.log
+[2026-02-19 13:01:41] Starting port-forward 127.0.0.1:28083 -> svc/kong-throttle-webhook:8080 (ns=monitoring)
+[2026-02-19 13:01:43] Port-forward listening on 127.0.0.1:28083. Log: /home/rocc/k8s-startup-logs/webhook-portforward-28083.log
+[2026-02-19 13:01:43] Pods overview (error states)
+[2026-02-19 13:01:43] Health check via Kong (retry until HTTP 200, max ~60s)
+[2026-02-19 13:01:43] Kong health not ready yet (HTTP 502) attempt 1/30
+[2026-02-19 13:01:45] Kong health not ready yet (HTTP 502) attempt 2/30
+[2026-02-19 13:01:47] Kong health not ready yet (HTTP 502) attempt 3/30
+[2026-02-19 13:01:49] Kong health not ready yet (HTTP 502) attempt 4/30
+[2026-02-19 13:01:51] Kong health not ready yet (HTTP 502) attempt 5/30
+[2026-02-19 13:01:54] Kong health not ready yet (HTTP 502) attempt 6/30
+[2026-02-19 13:01:56] Kong health not ready yet (HTTP 502) attempt 7/30
+[2026-02-19 13:01:58] Kong health not ready yet (HTTP 502) attempt 8/30
+[2026-02-19 13:02:00] Kong health not ready yet (HTTP 502) attempt 9/30
+[2026-02-19 13:02:02] Kong health not ready yet (HTTP 502) attempt 10/30
+[2026-02-19 13:02:04] Kong health not ready yet (HTTP 502) attempt 11/30
+[2026-02-19 13:02:07] Kong health not ready yet (HTTP 502) attempt 12/30
+[2026-02-19 13:02:09] Kong health not ready yet (HTTP 502) attempt 13/30
+[2026-02-19 13:02:11] Kong health not ready yet (HTTP 502) attempt 14/30
+[2026-02-19 13:02:13] Kong health not ready yet (HTTP 502) attempt 15/30
+[2026-02-19 13:02:24] Kong health not ready yet (HTTP 502) attempt 16/30
+[2026-02-19 13:02:27] Kong health not ready yet (HTTP 502) attempt 17/30
+[2026-02-19 13:02:29] Kong health not ready yet (HTTP 502) attempt 18/30
+[2026-02-19 13:02:31] Kong health not ready yet (HTTP 502) attempt 19/30
+[2026-02-19 13:02:33] Kong health OK (HTTP 200) on attempt 20
+[2026-02-19 13:02:33] Webhook healthz/decide (retry decide, max ~60s)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2100     3    0     3    0     0      2      0 --:--:--  0:00:01 --:--:--     2
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 05:02:33 GMT
+Content-Type: text/plain; charset=utf-8
+
+ok
+[2026-02-19 13:02:36] Webhook decide OK (HTTP 200) on attempt 1
+[2026-02-19 13:02:36] decide body:
+ok util=10 threshold=5 disabled=false patch_status=200
+[2026-02-19 13:02:36] Backup endpoints (kind node IP):
+[2026-02-19 13:02:36]   Kong NodePort:    http://172.18.0.4:31451
+[2026-02-19 13:02:36]   Webhook NodePort: http://172.18.0.4:30217
+[2026-02-19 13:02:36] Port-forward endpoints:
+[2026-02-19 13:02:36]   Kong:    http://127.0.0.1:28080
+[2026-02-19 13:02:36]   Webhook: http://127.0.0.1:28083
+[2026-02-19 13:02:36] === Startup end ===

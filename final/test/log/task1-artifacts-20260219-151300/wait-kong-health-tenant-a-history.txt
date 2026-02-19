@@ -1,0 +1,291 @@
+--- attempt 1 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:13 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 5
+X-Kong-Proxy-Latency: 19
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: e6cad83ef6479f72d45d2b2b4ee4e769
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"e6cad83ef6479f72d45d2b2b4ee4e769"
+}
+--- attempt 2 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:15 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 20
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 3125e70cd90f8600db2e6d734d82664b
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"3125e70cd90f8600db2e6d734d82664b"
+}
+--- attempt 3 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:17 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 3
+X-Kong-Proxy-Latency: 8
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 0f18c3521c4d9e4f09542434b5271d72
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"0f18c3521c4d9e4f09542434b5271d72"
+}
+--- attempt 4 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:19 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 8
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: cb2fa637041321529bf0906f4cffea21
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"cb2fa637041321529bf0906f4cffea21"
+}
+--- attempt 5 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:21 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 8
+X-Kong-Proxy-Latency: 14
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 73d2e85b0b62a720b1c59d4a46044e22
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"73d2e85b0b62a720b1c59d4a46044e22"
+}
+--- attempt 6 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:23 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 23
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: b4f06837f6e02257c9818c42a644a72b
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"b4f06837f6e02257c9818c42a644a72b"
+}
+--- attempt 7 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:25 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 7
+X-Kong-Proxy-Latency: 14
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 57558e0920749313f75b110aa5e0e92a
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"57558e0920749313f75b110aa5e0e92a"
+}
+--- attempt 8 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:27 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 7
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: fee50918b5048b565682b567e5b0e256
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"fee50918b5048b565682b567e5b0e256"
+}
+--- attempt 9 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:29 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 9
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: ab4c2a492be0e0123395ca40dc711156
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"ab4c2a492be0e0123395ca40dc711156"
+}
+--- attempt 10 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:31 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 21
+X-Kong-Proxy-Latency: 14
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 04f066130ec4373429f4772113082a66
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"04f066130ec4373429f4772113082a66"
+}
+--- attempt 11 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:33 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 9
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 2a11d60332489c55c82f4758f5407c3b
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"2a11d60332489c55c82f4758f5407c3b"
+}
+--- attempt 12 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:36 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 3
+X-Kong-Proxy-Latency: 7
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 375bbd276420d8474140675daa2da603
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"375bbd276420d8474140675daa2da603"
+}
+--- attempt 13 ---
+HTTP/1.1 502 Bad Gateway
+Date: Thu, 19 Feb 2026 07:17:38 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+Content-Length: 126
+X-Kong-Upstream-Latency: 4
+X-Kong-Proxy-Latency: 44
+Via: 1.1 kong/3.9.1
+Server: kong/3.9.1
+X-Kong-Request-Id: 6f827f68f2050528f031f4252373e81f
+
+{
+  "message":"An invalid response was received from the upstream server",
+  "request_id":"6f827f68f2050528f031f4252373e81f"
+}
+--- attempt 14 ---
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 113
+Connection: keep-alive
+X-RateLimit-Limit-Second: 5
+RateLimit-Limit: 5
+RateLimit-Remaining: 4
+RateLimit-Reset: 1
+X-RateLimit-Remaining-Second: 4
+date: Thu, 19 Feb 2026 07:17:39 GMT
+server: uvicorn
+X-Kong-Upstream-Latency: 375
+X-Kong-Proxy-Latency: 1
+Via: 1.1 kong/3.9.1
+X-Kong-Request-Id: e8e6277fb9b38068cab78f4b3f3cb608
+
+{"healthy_endpoints":[{"model":"openai/fake-llm","api_base":"http://fake-llm:8080/v1"}],"unhealthy_endpoints":[]}
