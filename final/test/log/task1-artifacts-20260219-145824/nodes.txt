@@ -1,4 +1,0 @@
-NAME                  STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
-task1-control-plane   Ready    control-plane   24h   v1.35.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
-task1-worker          Ready    <none>          24h   v1.35.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0
-task1-worker2         Ready    <none>          24h   v1.35.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.17.0-14-generic   containerd://2.2.0

@@ -1,4 +1,0 @@
-OUT_DIR=/home/rocc/first/task1-artifacts-20260219-151300
-Kong:    http://127.0.0.1:28080
-Webhook: http://127.0.0.1:28083
-GPU:     http://127.0.0.1:28084

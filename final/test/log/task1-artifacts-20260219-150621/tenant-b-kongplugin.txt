@@ -1,3 +1,0 @@
-NAME         PLUGIN-TYPE     AGE     DISABLED   CONFIG                                          PROGRAMMED
-key-auth     key-auth        18h                                                                
-rl-5per10s   rate-limiting   5h23m   true       {"limit_by":"ip","policy":"local","second":5}   

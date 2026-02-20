@@ -1,0 +1,7 @@
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.11.14
+Date: Thu, 19 Feb 2026 15:49:17 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 747
+
+{"tenant": "tenant-a", "plugin": "rl-5rps", "metrics_url": "http://fake-gpu-metrics.monitoring.svc.cluster.local:8080/metrics", "metric": "fake_gpu_utilization_percent", "util": 70.0, "threshold": 5.0, "disabled": false, "match_tenant_label": "any", "patch": {"status": 200, "url": "https://10.96.0.1:443/apis/configuration.konghq.com/v1/namespaces/tenant-a/kongplugins/rl-5rps", "response": "{\"apiVersion\":\"configuration.konghq.com/v1\",\"config\":{\"policy\":\"local\",\"second\":5},\"disabled\":false,\"kind\":\"KongPlugin\",\"metadata\":{\"annotations\":{\"kubectl.kubernetes.io/last-applied-configuration\":\"{\\\"apiVersion\\\":\\\"configuration.konghq.com/v1\\\",\\\"config\\\":{\\\"policy\\\":\\\"local\\\",\\\"second\\\":5},\\\"kind"}}
